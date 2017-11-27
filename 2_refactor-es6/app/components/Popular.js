@@ -1,8 +1,7 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-
-const api = require('../utils/api');
-const Loading = require('./Loading');
+import React from 'react'
+import PropTypes from 'prop-types'
+import { fetchPopularRepos } from '../utils/api'
+import Loading from './Loading'
 
 /* 
 If a component does not have state, and just renders,
@@ -81,7 +80,7 @@ class Popular extends React.Component {
 
 	updateLanguage(lang){
 		this.setState(() => ({selectedLanguage: lang, repos: null}));
-		api.fetchPopularRepos(lang)
+		fetchPopularRepos(lang)
 			.then( (repos) => this.setState(() => ({repos})));
 	}
 
@@ -104,4 +103,4 @@ class Popular extends React.Component {
 	}
 }
 
-module.exports = Popular;
+export default Popular;
