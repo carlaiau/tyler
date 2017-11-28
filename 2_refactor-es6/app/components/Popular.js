@@ -59,33 +59,25 @@ function RepoGrid({repos}){
 }
 
 RepoGrid.propTypes = {
-	 props: PropTypes.array.isRequired
+	 repos: PropTypes.array.isRequired
 
 }
 class Popular extends React.Component {
-	constructor(props){
-		super(props);
-		this.state = {
-			selectedLanguage: 'All',
-			repos: null
-		};
-
-		this.updateLanguage = this.updateLanguage.bind(this);
+	state = {
+		selectedLanguage: 'All',
+		repos: null
+	}
+	updateLanguage = (lang) => {
+		this.setState(() => ({selectedLanguage: lang, repos: null}));
+		fetchPopularRepos(lang)
+			.then( (repos) => this.setState(() => ({repos})));
 	}
 
 	componentDidMount(){
 		// AJAX
 		this.updateLanguage(this.state.selectedLanguage);
 	}
-
-	updateLanguage(lang){
-		this.setState(() => ({selectedLanguage: lang, repos: null}));
-		fetchPopularRepos(lang)
-			.then( (repos) => this.setState(() => ({repos})));
-	}
-
 	
-
 	render(){
 		const {selectedLanguage, repos} = this.state;
 		return (
